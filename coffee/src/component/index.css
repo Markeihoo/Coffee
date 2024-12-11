@@ -1,0 +1,202 @@
+.main-container {
+  
+    display: flex;
+    height: auto; 
+  }
+  
+  .sidebar {
+
+    flex: 1; /* ใช้พื้นที่ส่วนซ้าย 1/3 */
+    background-color: #f0f0f0; /* เพิ่มสีพื้นหลังให้ดูชัดเจน */
+    padding: 20px; /* เพิ่มระยะห่างภายใน */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-color: black;
+    
+  }
+  
+  .content {
+    flex: 3; /* ใช้พื้นที่ส่วนขวา 2/3 */
+    padding: 20px;
+    background-color: #f0f0f0;
+  }
+
+.Logomenu {
+    display: flex;
+    
+    
+    background-color: #f0f0f0;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-radius: 20px;
+  }
+
+  div {
+    color:black;
+  }
+
+
+  
+@font-face {
+    font-family: 'kanit';
+    src:url('../../../../Kanit/Kanit-Regular.ttf')
+  }
+  
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c0392b;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+  }
+  div img{
+    width: 150px;
+    height: 150px;
+  }
+  
+  h1.wellcome {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"], input[type="password"], input[type="submit"]:not(.back) {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  input:not([type="submit"]) {
+    color: #333;
+  }
+
+  input[type="text"], input[type="password"]{
+    background-color: white;
+  }
+  
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  .back{
+    display: flex;
+    justify-self: start;
+    width: 30px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .container-wellcome {
+    background-color: #c0392b;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .container {
+      width: 90%;
+    }
+    @font-face {
+      font-family: 'kanit';
+      src:url('../../../../Kanit/Kanit-Regular.ttf')
+    }
+    
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #c0392b;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 400px;
+    }
+    div img{
+      width: 150px;
+      height: 150px;
+    }
+    
+    h1.wellcome {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    input[type="text"], input[type="password"], input[type="submit"]:not(.back) {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+    input:not([type="submit"]) {
+      color: #333;
+    }
+  
+    input[type="text"], input[type="password"]{
+      background-color: white;
+    }
+    
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    
+    .back{
+      display: flex;
+      justify-self: start;
+      width: 30px;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  
+    .container-wellcome {
+      background-color: #c0392b;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 400px;
+    }
+  }
