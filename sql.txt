@@ -1,0 +1,154 @@
+
+-- ตาราง Category
+CREATE TABLE Category (
+    Category_id SERIAL PRIMARY KEY,
+    Category_name VARCHAR(50) NOT NULL
+);
+
+-- ตาราง Customer
+CREATE TABLE Customer (
+    Customer_id SERIAL PRIMARY KEY,
+    Customer_name VARCHAR(50) NOT NULL,
+    Customer_tel VARCHAR(10) NOT NULL
+);
+
+-- ตาราง Employee
+CREATE TABLE Employee (
+    Employee_id SERIAL PRIMARY KEY,
+    Employee_Fname VARCHAR(50) NOT NULL,
+    Employee_Lname VARCHAR(50) NOT NULL,
+    Password VARCHAR(8) NOT NULL,
+    Tel VARCHAR(10) NOT NULL
+);
+
+-- ตาราง Product
+CREATE TABLE Product (
+    Product_id SERIAL PRIMARY KEY,
+    Product_name VARCHAR(50) NOT NULL,
+    Product_price DECIMAL(5,2) NOT NULL,
+    Category_id INT NOT NULL,
+    FOREIGN KEY (Category_id) REFERENCES Category(Category_id)
+);
+
+-- ตาราง Orders
+CREATE TABLE Orders (
+    Order_id SERIAL PRIMARY KEY,
+    Order_date TIMESTAMP NOT NULL,
+    Order_status VARCHAR(20) NOT NULL,
+    Employee_id INT NOT NULL,
+    Customer_id INT NOT NULL,
+    FOREIGN KEY (Employee_id) REFERENCES Employee(Employee_id),
+    FOREIGN KEY (Customer_id) REFERENCES Customer(Customer_id)
+);
+
+-- ตาราง Payment
+CREATE TABLE Payment (
+    Payment_id SERIAL PRIMARY KEY,
+    Payment_date TIMESTAMP NOT NULL,
+    Payment_Method VARCHAR(20) NOT NULL,
+    Order_id INT NOT NULL,
+    FOREIGN KEY (Order_id) REFERENCES Orders(Order_id)
+);
+
+-- ตาราง OrderDetail
+CREATE TABLE OrderDetail (
+    Orderdetail_id SERIAL PRIMARY KEY,
+    Quantity INT NOT NULL,
+    OrderDe_discription VARCHAR(100),
+    Order_id INT NOT NULL,
+    Product_id INT NOT NULL,
+    FOREIGN KEY (Order_id) REFERENCES Orders(Order_id),
+    FOREIGN KEY (Product_id) REFERENCES Product(Product_id)
+);
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------
+-- เพิ่มข้อมูลลงในตาราง Category
+INSERT INTO Category (Category_name) 
+VALUES 
+('ร้อน'),
+('เย็น'),
+('ปั่น');
+
+-- เพิ่มข้อมูลลงในตาราง Customer
+INSERT INTO Customer (Customer_name, Customer_tel) 
+VALUES 
+('สมชาย', '0812345678'),
+('สมหญิง', '0897654321'),
+('วิไลลักษณ์', '0856789123');
+
+-- เพิ่มข้อมูลลงในตาราง Employee
+INSERT INTO Employee (Employee_Fname, Employee_Lname, Password, Tel) 
+VALUES 
+('เอกชัย', 'ใจมั่น', 'pass123', '0912345678'),
+('กานดา', 'ใจเย็น', 'pass456', '0923456789'),
+('วิทยา', 'ตั้งใจ', 'pass789', '0934567890');
+
+-- เพิ่มข้อมูลลงในตาราง Product
+INSERT INTO Product (Product_name, Product_price, Category_id) 
+VALUES 
+-- หมวดร้อน
+('กาแฟดำร้อน', 50.00, 1),
+('ลาเต้ร้อน', 60.00, 1),
+('คาปูชิโน่ร้อน', 65.00, 1),
+('มอคค่าร้อน', 70.00, 1),
+('อเมริกาโน่ร้อน', 55.00, 1),
+('ช็อกโกแลตร้อน', 60.00, 1),
+('ชาเขียวร้อน', 55.00, 1),
+('ชาไทยร้อน', 50.00, 1),
+('เอสเปรสโซ่ร้อน', 55.00, 1),
+('มัทฉะร้อน', 65.00, 1),
+
+-- หมวดเย็น
+('กาแฟเย็น', 60.00, 2),
+('ลาเต้เย็น', 65.00, 2),
+('คาปูชิโน่เย็น', 70.00, 2),
+('มอคค่าเย็น', 75.00, 2),
+('อเมริกาโน่เย็น', 60.00, 2),
+('ช็อกโกแลตเย็น', 65.00, 2),
+('ชาเขียวเย็น', 60.00, 2),
+('ชาไทยเย็น', 55.00, 2),
+('เอสเปรสโซ่เย็น', 60.00, 2),
+('มัทฉะเย็น', 70.00, 2),
+
+-- หมวดปั่น
+('กาแฟปั่น', 65.00, 3),
+('ลาเต้ปั่น', 70.00, 3),
+('คาปูชิโน่ปั่น', 75.00, 3),
+('มอคค่าปั่น', 80.00, 3),
+('อเมริกาโน่ปั่น', 65.00, 3),
+('ช็อกโกแลตปั่น', 70.00, 3),
+('ชาเขียวปั่น', 65.00, 3),
+('ชาไทยปั่น', 60.00, 3),
+('เอสเปรสโซ่ปั่น', 65.00, 3),
+('มัทฉะปั่น', 75.00, 3);
+
+-- เพิ่มข้อมูลลงในตาราง Orders
+INSERT INTO Orders (Order_date, Order_status, Employee_id, Customer_id) 
+VALUES 
+('2024-12-01 10:00:00', 'กำลังดำเนินการ', 1, 1),
+('2024-12-02 12:30:00', 'สำเร็จ', 2, 2),
+('2024-12-03 15:00:00', 'ยกเลิก', 3, 3);
+
+-- เพิ่มข้อมูลลงในตาราง Payment
+INSERT INTO Payment (Payment_date, Payment_Method, Order_id) 
+VALUES 
+('2024-12-01 10:15:00', 'เงินสด', 1),
+('2024-12-02 12:45:00', 'บัตรเครดิต', 2),
+('2024-12-03 15:15:00', 'โอนเงิน', 3);
+
+-- เพิ่มข้อมูลลงในตาราง OrderDetail
+INSERT INTO OrderDetail (Quantity, OrderDe_discription, Order_id, Product_id) 
+VALUES 
+(2, NULL, 1, 5),
+(1, NULL, 2, 18),
+(3, 'ไม่หวาน', 3, 4);
