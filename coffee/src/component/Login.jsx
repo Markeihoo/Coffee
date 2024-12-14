@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { submitLogin } from './customer/Login.js';
 
 const Login = () => {
-   const [employee_id, setEmployeeId] = useState('');
+   const [tel, setTel] = useState('');
    const [password, setPassword] = useState('');
    const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault(); // ป้องกันการรีเฟรชหน้า
-    await submitLogin(employee_id, password); // เรียกใช้งานฟังก์ชันล็อกอิน
+    await submitLogin(tel, password); // เรียกใช้งานฟังก์ชันล็อกอิน
   };
 
   return (
@@ -32,8 +32,8 @@ const Login = () => {
           <input
             type='text'
             placeholder='Username'
-            value={employee_id}
-            onChange={(e) => setEmployeeId(e.target.value)}
+            value={tel}
+            onChange={(e) => setTel(e.target.value)}
           />
 
           <input
