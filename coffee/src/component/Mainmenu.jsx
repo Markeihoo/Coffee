@@ -2,19 +2,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
 import Menu from './Menu'
-import Customer from './customer/Customer.jsx'
+import Welcome from './customer/Customer.jsx'
 const Mainmenu = () => {
   return (
     <>
-    <div className='main-container'>
+    <div className='main-container' >
     <div className='sidebar'>
     <Menu />
 
 
     </div>
 
-    <div className='content'>
-    <Customer />
+    <div className='content w'>
+    <Welcome />
 
     </div>
 
