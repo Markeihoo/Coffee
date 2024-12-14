@@ -1,6 +1,7 @@
 import React from 'react'
 
 const ShowCustomer = () => {
+
     return (
         <div>
             <h1>showCustomer</h1>
@@ -9,3 +10,10 @@ const ShowCustomer = () => {
 }
 
 export default ShowCustomer
+  return (
+    <div>ShowCustomer</div>
+  )
+}
+
+export default ShowCustomer
+
