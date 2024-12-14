@@ -1,9 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { BiExit } from "react-icons/bi";
-
+import { useEffect, useState } from 'react';
 import './index.css'
-const Menu = () => {
+
+const Menu = ({ gotoOrder, gotoRegisEmployee, gotoRegisCustomer, gotoShow, gotoHistory, gotoCustomer, gotoLogout }) => {
   return (
     <>
       <div className='container'>
@@ -12,22 +13,29 @@ const Menu = () => {
           <h1 className='welcome' style={{ marginLeft: '10px' }}>Menu <br />Coffee shop</h1>
         </div>
 
-        <input type='submit' value='สั่งรายการอาหาร' />
-        <input type='submit' value='สมัครสมาชิกลูกค้า' />
+        <input type='submit' onClick={gotoCustomer} value='สั่งรายการอาหาร' />
+
+        <input type='submit' onClick={gotoRegisCustomer} value='สมัครสมาชิกลูกค้า' />
+
         <p style={{ color: 'gray', marginTop: '5px', marginBottom: '5px' }}>---------จัดการระบบภายในร้าน---------</p>
-        <input type='submit' style={{ backgroundColor: '#3e71af' }} value='ออร์เดอร์ทั้งหมด'
+
+        <input type='submit' style={{ backgroundColor: '#3e71af' }} onClick={gotoOrder} value='ออร์เดอร์ทั้งหมด'
           onMouseEnter={(e) => e.target.style.backgroundColor = '#35628b'}
           onMouseLeave={(e) => e.target.style.backgroundColor = '#3e71af'} />
-        <input type='submit' style={{ backgroundColor: '#3e71af' }} value='แสดงรายชื่อลูกค้า'
+
+        <input type='submit' style={{ backgroundColor: '#3e71af' }} onClick={gotoShow} value='แสดงรายชื่อลูกค้า'
           onMouseEnter={(e) => e.target.style.backgroundColor = '#35628b'}
           onMouseLeave={(e) => e.target.style.backgroundColor = '#3e71af'} />
-        <input type='submit' style={{ backgroundColor: '#3e71af' }} value='สมัครสมาชิกพนักงาน'
+
+        <input type='submit' style={{ backgroundColor: '#3e71af' }} onClick={gotoRegisEmployee} value='สมัครสมาชิกพนักงาน'
           onMouseEnter={(e) => e.target.style.backgroundColor = '#35628b'}
           onMouseLeave={(e) => e.target.style.backgroundColor = '#3e71af'} />
-        <input type='submit' style={{ backgroundColor: '#3e71af' }} value='ประวัติการสั่งซื้อ'
+
+        <input type='submit' style={{ backgroundColor: '#3e71af' }} onClick={gotoHistory} value='ประวัติการสั่งซื้อ'
           onMouseEnter={(e) => e.target.style.backgroundColor = '#35628b'}
           onMouseLeave={(e) => e.target.style.backgroundColor = '#3e71af'} />
-        <input type='submit' style={{ backgroundColor: 'red' }} value='ออกจากระบบ'
+
+        <input type='submit' style={{ backgroundColor: 'red' }} onClick={gotoLogout} value='ออกจากระบบ'
           onMouseEnter={(e) => e.target.style.backgroundColor = '#c0392b'}
           onMouseLeave={(e) => e.target.style.backgroundColor = 'red'} />
       </div>
