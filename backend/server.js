@@ -12,6 +12,7 @@ const OrderDetails = require('./src/orderDetails');
 const Payment = require('./src/payment');
 
 
+
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,10 @@ const pool = new Pool({
 
 // Middleware
 app.use(express.json());
+
+
+const cors = require('cors');
+app.use(cors()); // เปิดใช้ CORS สำหรับทุกโดเมน
 
 // Example route
 
