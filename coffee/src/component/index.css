@@ -34,10 +34,7 @@
     border-radius: 20px;
   }
 
-  div {
-    color:black;
-  }
-
+ 
 
   
 @font-face {
@@ -68,10 +65,7 @@
     height: 150px;
   }
   
-  h1.wellcome {
-    color: #333;
-    margin-bottom: 20px;
-  }
+  
   
   input[type="text"], input[type="password"], input[type="submit"]:not(.back) {
     width: 100%;
@@ -150,10 +144,7 @@
       height: 150px;
     }
     
-    h1.wellcome {
-      color: #333;
-      margin-bottom: 20px;
-    }
+   
     
     input[type="text"], input[type="password"], input[type="submit"]:not(.back) {
       width: 100%;

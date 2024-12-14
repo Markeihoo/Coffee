@@ -23,18 +23,18 @@ const Customer = () => {
     const [cart, setCart] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('hot');
     const [showCart, setShowCart] = useState(false); // สถานะการแสดงตะกร้า
-
+    
     const addToCart = (product) => {
         setCart((prevCart) => {
-            const updatedCart = [...prevCart];
-            const existingProduct = updatedCart.find(item => item.id === product.id);
-
-            if (existingProduct) {
-                existingProduct.quantity += 1;
-            } else {
-                updatedCart.push({ ...product, quantity: 1 });
-            }
-            return updatedCart;
+            return prevCart.map(item => 
+                item.id === product.id 
+                    ? { ...item, quantity: item.quantity + 1 } 
+                    : item
+            ).concat(
+                prevCart.some(item => item.id === product.id) 
+                    ? [] 
+                    : [{ ...product, quantity: 1 }]
+            );
         });
 
         setShowCart(true); // เปิดแท็บตะกร้าทุกครั้งที่เพิ่มสินค้า
