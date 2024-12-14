@@ -7,12 +7,12 @@ import Menu from './Menu'
 
 import Welcome from './customer/Welcome.jsx'
 import { useState } from 'react'
-import Orders from './customer/Customer.jsx'
+import Orders from './Orders'
 import Register_employee from './Register_employee'
 import Register_customer from './customer/regisCustomer'
 import History from './History'
 import CustomerList from './CustomerList.jsx'
-import Customer from './Customer.jsx'
+import Customer from './customer/Customer.jsx'
 const Mainmenu = () => {
 
 
@@ -52,7 +52,7 @@ const Mainmenu = () => {
 
     </div>
 
-    <div className='content w-60'>
+    <div className='content w-[900px]'>
     {activeComponent === 'Orders' && <Orders />}
     {activeComponent === 'welcome' && <Welcome />}
     {activeComponent === 'Register_employee' && <Register_employee />}

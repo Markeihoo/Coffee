@@ -5,7 +5,7 @@ const router = express.Router();
 // GET request เพื่อดึงข้อมูลลูกค้าทั้งหมด
 router.get('/get', async (req, res) => {
     try {
-        const response = await pool.query('SELECT * FROM customer');
+        const response = await pool.query('SELECT * FROM customer ORDER BY customer_id ASC');
         res.json(response.rows); // ส่งกลับข้อมูลลูกค้าทั้งหมด
     } catch (err) {
         console.error(err.message);
