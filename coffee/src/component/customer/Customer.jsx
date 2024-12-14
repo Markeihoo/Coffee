@@ -98,7 +98,7 @@ const Customer = () => {
     };
 
     return (
-        <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+        <div className="container mx-auto p-6 bg-gray-50 h-[800px] flex flex-col ">
             <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">Customer - Menu Coffee Shop</h1>
 
             {/* ปุ่มหมวดหมู่ */}
@@ -124,7 +124,7 @@ const Customer = () => {
                     className="w-1/3 p-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 />
             </div>
-            <div className="products mt-8 gap-6 border border-gray-300 rounded-lg p-4 max-h-[600px] overflow-y-auto">
+            <div className="products mt-8 gap-6 border border-gray-300 rounded-lg p-4 h-full overflow-y-auto">
                 <div className="category">
                     {filteredProducts.length === 0 ? (
                         <div className="text-center text-xl text-red-500 font-semibold">
@@ -134,7 +134,7 @@ const Customer = () => {
                         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                             {/* ใช้ .slice() เพื่อแสดงสินค้าแค่ 9 รายการ */}
                             {filteredProducts.slice(0, 9).map((product) => (
-                                <li key={product.product_id} className="product flex flex-col items-center p-4 border border-gray-200 rounded-lg shadow-sm w-full">
+                                <li key={product.product_id} className="product flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm w-full">
                                     <span className="text-lg font-semibold">
                                         {product.product_name}
                                         <span className="text-sm">
@@ -153,8 +153,8 @@ const Customer = () => {
                 </div>
                 {/* หากมีสินค้ามากกว่า 9 รายการ ให้แสดงข้อความให้เลื่อน */}
                 {filteredProducts.length > 9 && (
-                    <div className="text-center mt-4 text-gray-500">
-                        <span>เลื่อนเพื่อดูรายการเพิ่มเติม...</span>
+                    <div >
+                        
                     </div>
                 )}
             </div>
@@ -163,47 +163,47 @@ const Customer = () => {
 
             {/* ปุ่มตะกร้าสินค้าทรงวงกลม */}
             <button
-                onClick={() => setShowCart(!showCart)}
-                className="absolute top-4 right-4 bg-red-500 text-white rounded-full p-4 shadow-lg hover:bg-red-600 transition duration-300"
-            >
-                🛒
-            </button>
+        onClick={() => setShowCart(!showCart)}
+        className="bg-red-500 text-white rounded-full p-4 shadow-lg hover:bg-red-600 transition duration-300 absolute top-4 right-4"
+    >
+        🛒
+    </button>
 
             {/* ตะกร้าสินค้าจะเลื่อนจากขวา */}
             {cartUpdated && (
                 <div
-                    className={`cart p-4 border border-gray-300 rounded-lg shadow-lg absolute top-16 right-[-300px] bg-white w-72 transition-transform duration-500 ${showCart ? 'transform translate-x-[-100px]' : 'transform translate-x-full'}`}
-                >
-                    <h2 className="text-xl font-semibold text-gray-700">ตะกร้าสินค้า</h2>
-                    <ul className="space-y-4 mt-4">
-                        {cart.map((item) => (
-                            <li key={item.product_id} className="cart-item flex justify-between items-center">
-                                <span>{item.product_name} (x{item.quantity})</span>
-                                <button onClick={() => removeFromCart(item.product_id)} className="remove-btn text-red-500 hover:text-red-700">
-                                    ลบ
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-
-                    <div className="total-price mt-4">
-                        <h3 className="text-lg font-semibold text-gray-800">รวม: {getTotalPrice()} ฿</h3>
-                    </div>
-
-                    <button
-                        onClick={() => setShowCart(false)}
-                        className="close-btn absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                    >
-                        &times;
-                    </button>
-
-                    <button
-                        // onClick={handleCheckout}
-                        className="checkout-btn bg-blue-500 text-white hover:bg-blue-600 mt-4 p-2 rounded-md transition duration-150"
-                    >
-                        สั่งซื้อ
-                    </button>
+                className={`cart p-4 border border-gray-300 rounded-lg shadow-lg absolute top-16 right-4 bg-white w-72 transition-transform duration-500 ${showCart ? 'transform translate-x-0' : 'transform translate-x-full'}`}
+            >
+                <h2 className="text-xl font-semibold text-gray-700">ตะกร้าสินค้า</h2>
+                <ul className="space-y-4 mt-4">
+                    {cart.map((item) => (
+                        <li key={item.product_id} className="cart-item flex justify-between items-center">
+                            <span>{item.product_name} (x{item.quantity})</span>
+                            <button onClick={() => removeFromCart(item.product_id)} className="remove-btn text-red-500 hover:text-red-700">
+                                ลบ
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+    
+                <div className="total-price mt-4">
+                    <h3 className="text-lg font-semibold text-gray-800">รวม: {getTotalPrice()} ฿</h3>
                 </div>
+    
+                <button
+                    onClick={() => setShowCart(false)}
+                    className="close-btn absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+                >
+                    &times;
+                </button>
+    
+                <button
+                    // onClick={handleCheckout}
+                    className="checkout-btn bg-blue-500 text-white hover:bg-blue-600 mt-4 p-2 rounded-md transition duration-150"
+                >
+                    สั่งซื้อ
+                </button>
+            </div>
             )}
         </div>
     );

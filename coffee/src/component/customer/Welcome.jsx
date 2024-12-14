@@ -3,7 +3,7 @@ import React from 'react';
 const Welcome = () => {
   return (
     // bg-gradient-to-r from-green-200 to-blue-200
-    <div className="min-h-screen  flex flex-col items-center justify-center text-center p-6">
+    <div className="  flex flex-col items-center justify-center text-center p-6">
       <h1 className="text-4xl font-extrabold text-gray-800 mb-4">ยินดีต้อนรับสู่ร้านกาแฟ</h1>
       <h2 className="text-3xl font-semibold text-gray-700 mb-6">Coffee Shop</h2>
       

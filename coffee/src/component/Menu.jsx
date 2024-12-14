@@ -7,12 +7,15 @@ import './index.css'
 
 const Menu = ({ ToggleOrder, ToggleRegister_customer, ToggleRegister_employee, ToggleHistory, ToggleCustomerList, ToggleCustomer }) => {
 
-
+const logout = () => {
+  localStorage.removeItem('token');
+  window.location.href = '/login';
+};
 
 
   return (
     <>
-      <div className="container flex flex-col items-center justify-center w-[280px] h-screen mx-auto text-center">
+      <div className="container flex flex-col items-center justify-center w-[280px] mx-auto text-center">
         <img className='justify-center' src='https://png.pngtree.com/png-vector/20240426/ourmid/pngtree-coffee-cat-sticker-by-chidees-png-image_12315498.png' alt='' />
         <h1 className='welcome' > Menu Coffee shop</h1>
 
@@ -48,7 +51,7 @@ const Menu = ({ ToggleOrder, ToggleRegister_customer, ToggleRegister_employee, T
 
 
         <input type='submit' style={{ backgroundColor: 'red' }} value='ออกจากระบบ'
-          onClick={() => window.location.href = '/Login'}
+          onClick={logout}
 
           onMouseEnter={(e) => e.target.style.backgroundColor = '#c0392b'}
           onMouseLeave={(e) => e.target.style.backgroundColor = 'red'} />

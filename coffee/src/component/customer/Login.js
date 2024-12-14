@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 
-export const submitLogin = async(employee_id,password)=>{
-    if(!employee_id || !password){
+export const submitLogin = async(tel,password)=>{
+    if(!tel || !password){
         return res.status(400).json({ message: 'Username and password are required' });
     }
     try{
@@ -10,7 +10,7 @@ export const submitLogin = async(employee_id,password)=>{
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ employee_id, password }),
+            body: JSON.stringify({ tel, password }),
           });
           const data = await response.json();
           console.log(data);
