@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './index.css'
 import Menu from './Menu'
-import Customer from './customer.jsx'
+import Customer from './customer/Customer.jsx'
 const Mainmenu = () => {
   return (
     <>
