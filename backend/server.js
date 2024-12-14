@@ -1,7 +1,7 @@
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
-
+const Login = require('./login');
 dotenv.config();
 
 const app = express();
@@ -20,6 +20,8 @@ const pool = new Pool({
 app.use(express.json());
 
 // Example route
+
+app.use('/login', Login);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
