@@ -2,6 +2,16 @@ const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 const Login = require('./login');
+
+const Category = require('./src/category');
+const Product = require('./src/product');
+const Customer = require('./src/customer');
+const Employee = require('./src/employee');
+const Orders = require('./src/orders');
+const OrderDetails = require('./src/orderDetails');
+const Payment = require('./src/payment');
+
+
 dotenv.config();
 
 const app = express();
@@ -22,6 +32,13 @@ app.use(express.json());
 // Example route
 
 app.use('/login', Login);
+app.use('/category', Category); //localhost:8000/category/get
+app.use('/product', Product);   //localhost:8000/product/get/3
+app.use('/customer', Customer); //localhost:8000/customer/get
+app.use('/employee', Employee); //localhost:8000/employee/get
+app.use('/orders', Orders);     //localhost:8000/orders/get
+app.use('/orderDetails', OrderDetails); //localhost:8000/orderDetails/get/1
+app.use('/payment', Payment);   //localhost:8000/payment/get
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

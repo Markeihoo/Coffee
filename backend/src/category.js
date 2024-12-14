@@ -1,4 +1,5 @@
 const pool = require('../db')
+const express = require('express');
 const router = express.Router();
 
 router.get('/get', async (req, res) => {
@@ -9,3 +10,4 @@ router.get('/get', async (req, res) => {
         console.error(err.message)
     }
 })
+module.exports = router;

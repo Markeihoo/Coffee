@@ -2,7 +2,8 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    './src/**/*.{html,js,jsx,ts,tsx}', // ครอบคลุมไฟล์ในโฟลเดอร์ src
+
   ],
   theme: {
     extend: {},
