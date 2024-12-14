@@ -16,6 +16,7 @@ export const submitLogin = async(employee_id,password)=>{
           console.log(data);
           if(data.message === "เข้าสู่ระบบสําเร็จ"){
             window.location.href = '/Mainmenu';
+            localStorage.setItem('token',data.token);
           }
           return data;
     }catch(error){
