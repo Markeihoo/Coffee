@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { BiExit } from "react-icons/bi";
-
+import { useEffect, useState } from 'react';
 import './index.css'
+
 
 const Menu = ({ToggleOrder,ToggleRegister_customer,ToggleRegister_employee,ToggleHistory,ToggleCustomerList,ToggleCustomer}) => {
   
+
 
 
   return (
@@ -15,6 +17,7 @@ const Menu = ({ToggleOrder,ToggleRegister_customer,ToggleRegister_employee,Toggl
           <img src='https://png.pngtree.com/png-vector/20240426/ourmid/pngtree-coffee-cat-sticker-by-chidees-png-image_12315498.png' alt='' />
           <h1 className='welcome' style={{ marginLeft: '10px' }}>Menu <br />Coffee shop</h1>
         </div>
+
 
         <input type='submit'  onClick={ToggleOrder}  value='สั่งรายการอาหาร'/>
         <input type='submit' onClick={ToggleRegister_customer} value='สมัครสมาชิกลูกค้า' />
@@ -46,6 +49,7 @@ const Menu = ({ToggleOrder,ToggleRegister_customer,ToggleRegister_employee,Toggl
         
         <input type='submit' style={{ backgroundColor: 'red' }} value='ออกจากระบบ'
         onClick={() => window.location.href = '/Login'}
+
           onMouseEnter={(e) => e.target.style.backgroundColor = '#c0392b'}
           onMouseLeave={(e) => e.target.style.backgroundColor = 'red'} />
       </div>

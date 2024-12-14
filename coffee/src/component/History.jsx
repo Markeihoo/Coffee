@@ -1,9 +1,12 @@
 import React from 'react'
 
 const History = () => {
-  return (
-    <div>History</div>
-  )
+    return (
+        <div>
+            <h1>history</h1>
+        </div>
+    )
 }
 
 export default History
+

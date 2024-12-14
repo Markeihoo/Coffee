@@ -2,6 +2,9 @@ import React from 'react'
 
 import './index.css'
 import Menu from './Menu'
+
+const Mainmenu = () => {
+
 import Welcome from './customer/Customer.jsx'
 import { useState } from 'react'
 import Orders from './Orders'
@@ -32,6 +35,7 @@ const Mainmenu = () => {
   const ToggleCustomer = () => {
     setActiveComponent(prevstate=>(prevstate ==='Customer'? 'welcome':'Customer'));
   }
+
 
   return (
     <>
