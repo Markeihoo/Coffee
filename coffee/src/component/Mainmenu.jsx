@@ -3,11 +3,11 @@ import React from 'react'
 import './index.css'
 import Menu from './Menu'
 
-const Mainmenu = () => {
 
-import Welcome from './customer/Customer.jsx'
+
+import Welcome from './customer/Welcome.jsx'
 import { useState } from 'react'
-import Orders from './Orders'
+import Orders from './customer/Customer.jsx'
 import Register_employee from './Register_employee'
 import Register_customer from './customer/regisCustomer'
 import History from './History'

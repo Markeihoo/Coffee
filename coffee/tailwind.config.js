@@ -2,11 +2,10 @@
 export default {
   content: [
     "./index.html",
-    './src/**/*.{html,js,jsx,ts,tsx}', // ครอบคลุมไฟล์ในโฟลเดอร์ src
-
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-};
+}
