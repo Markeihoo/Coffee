@@ -5,13 +5,15 @@ const RegisCustomer = () => {
   const [customer_name, setCustomer_name] = useState('');
   const [customer_tel, setCustomer_tel] = useState('');
     const reset = () => {
-        customer_name('');
-        customer_tel('');
+        setCustomer_name('');
+        setCustomer_tel('');
     }
     const handleLogin = async (event) => {
           event.preventDefault(); // ป้องกันการรีเฟรชหน้า
           await submitRegister(customer_name,customer_tel); // เรียกใช้งานฟังก์ชันล็อกอิน
-          
+          setCustomer_name('');
+          setCustomer_tel('');
+    
         };
 
     return (
@@ -36,7 +38,7 @@ const RegisCustomer = () => {
           </button>
           <button
             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onAbort={reset}
+            onClick={reset}
           >
             Reset
           </button>
