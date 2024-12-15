@@ -31,7 +31,7 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <input
             type='text'
-            placeholder='Username'
+            placeholder='your phone number'
             value={tel}
             onChange={(e) => setTel(e.target.value)}
           />

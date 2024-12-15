@@ -85,7 +85,25 @@ const Orders = () => {
                                 </h2>
                                 <p className="text-gray-600">วันที่สั่งซื้อ: {new Date(order.order_date).toLocaleString('th-TH')}</p>
                                 <p className="text-gray-600">สถานะ: <span className="text-red-600">{order.order_status}</span></p>
-
+                                {/* รายละเอียดสินค้า */}
+                                <div className="mt-4">
+                                    {order.products.length > 0 && (
+                                        <ul>
+                                            {order.products.map((product, index) => (
+                                                <li key={index} className="text-gray-600">
+                                                    {/* แสดงชื่อสินค้าและจำนวน */}
+                                                    {product.product_name} (x{product.Quantity})
+                                                    {product.OrderDe_discription && (
+                                                        <span className="block text-gray-500">
+                                                            - {product.OrderDe_discription}
+                                                        </span>
+                                                    )}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                                <p>---------------------------------</p>
                                 <div className="mt-4">
                                     <label className="block text-gray-600 mb-2">เปลี่ยนสถานะออเดอร์:</label>
                                     <select
@@ -98,13 +116,14 @@ const Orders = () => {
                                         <option value="ยกเลิก">ยกเลิก</option>
                                     </select>
                                 </div>
-
                                 <button
                                     className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
                                     onClick={() => handleSave(order.order_id)} // เมื่อกดบันทึก, จะเรียกใช้ handleSave
                                 >
                                     บันทึกข้อมูล
                                 </button>
+
+
                             </div>
                         ))}
                 </div>
