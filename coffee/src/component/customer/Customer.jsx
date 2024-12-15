@@ -19,6 +19,7 @@ const Customer = () => {
 
     const [customers, setCustomers] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
+    const[orderdeDiscription, setOrderdeDiscription] = useState(null)
 
     // Function to handle the customer selection from the dropdown
     const handleCustomerChange = (selectedOption) => {
@@ -26,7 +27,6 @@ const Customer = () => {
     };
 
     const [order, setOrder] = useState(null);  // state สำหรับเก็บข้อมูลออเดอร์ล่าสุด
-    const [totalPrice, setTotalPrice] = useState(0); // ใส่ค่ารวมของราคาที่จะต้องชำระ
     const [refresh, setRefresh] = useState(false); // ตัวแปรสำหรับ trigger การดึงข้อมูลใหม่
 
     // useEffect ดึงข้อมูลออเดอร์ล่าสุด
@@ -184,7 +184,7 @@ const Customer = () => {
         setShowCart(true);
         setTimeout(() => {
             setShowCart(false);
-        }, 10000);
+        }, 20000);
     };
 
     // Remove product from cart
@@ -233,7 +233,7 @@ const Customer = () => {
 
             orderDetails: cart.map(item => ({
                 quantity: item.quantity,
-                orderde_discription: item.product_name,
+                orderde_discription: orderdeDiscription,
                 product_id: item.product_id
             })),
         };
@@ -254,7 +254,7 @@ const Customer = () => {
 
                 const responseData = await response.json();
                 console.log('Order successfully created:', responseData);
-
+                setOrderdeDiscription('');
                 setCart([]); // Clear cart after checkout
                 setRefresh((prev) => !prev); // Trigger refresh for latest data
             } else {
@@ -272,9 +272,8 @@ const Customer = () => {
     return (
 
         <div className="container mx-auto p-6 bg-gray-50 h-[800px] flex flex-col">
-        <button >Testlog</button>
        
-            <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">Customer - Menu Coffee Shop</h1>
+            <h1 className="text-center text-3xl font-bold text-gray-800 ">Customer - Menu Coffee Shop</h1>
 
             {/* Category buttons */}
             <div className="categories mt-8 flex justify-center space-x-6">
@@ -308,7 +307,7 @@ const Customer = () => {
                     </div>
                 ) : (
                     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {filteredProducts.slice(0, 9).map((product) => (
+                        {filteredProducts.slice(0,1000).map((product) => (
                             <li key={product.product_id} className="product flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm w-full">
                                 <span className="text-lg font-semibold">
                                     {product.product_name}
@@ -341,17 +340,16 @@ const Customer = () => {
                     className={`cart p-4 border border-gray-300 rounded-lg shadow-lg absolute top-16 right-4 bg-white w-72 transition-transform duration-500 ${showCart ? 'transform translate-x-0' : 'transform translate-x-full'}`}
                 >
                     <h2 className="text-xl font-semibold text-gray-700">ตะกร้าสินค้า</h2><br />
-                    <h3>ชื่อลูกค้า</h3>
+                    <h3 className="text-lg font-semibold text-gray-700 bg-orange-300">ชื่อลูกค้า <span className="text-red-500">*</span></h3>
                     <Select
                         className="basic-single"
                         classNamePrefix="select"
                         value={selectedCustomer}  // Bind to selected customer state
                         onChange={handleCustomerChange}  // Update the state when the customer is selected
                         name="customer"
-
                         placeholder="กรุณาเลือกลูกค้า" // ข้อความเริ่มต้น
                         options={customers}  // Use the customer data here
-                        isSearchable
+                        
                     />
                     <ul className="space-y-4 mt-6">
                         {cart.map((item) => (
@@ -362,6 +360,8 @@ const Customer = () => {
                                 <div className="mb-2">
                                     <input
                                         type="text"
+                                        // value={orderdeDiscription}
+                                        onChange={(e) => setOrderdeDiscription(e.target.value)}
                                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         placeholder={`เพิ่มรายละเอียด ${item.product_name}`}
                                     />
@@ -404,7 +404,8 @@ const Customer = () => {
                     <div className="bg-white p-6 rounded-lg w-1/3">
                         <h2 className="text-lg font-semibold text-center">เลือกวิธีการชำระเงิน</h2>
                         {order && (
-                            <p>รายการออเดอร์: {order.order_id} รวม: {totalPrice} ฿ิ <br />
+                            <p>รายการออเดอร์ที่: {order.order_id} <br />
+                            รวม: <span className='text-red-500'>{order.total_price}</span> ฿ิ <br />
                             ชื่อลูกค้า: {order.customer_name}</p>
                         )}
                         <div className="mt-4 w-full h-full flex flex-col justify-center items-center text-center">
