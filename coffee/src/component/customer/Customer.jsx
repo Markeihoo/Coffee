@@ -15,7 +15,7 @@ const Customer = () => {
     const [showPaymentDialog, setShowPaymentDialog] = useState(false); // For showing payment dialog
     const [paymentMethod, setPaymentMethod] = useState('เงินสด'); // For storing selected payment method
 
-
+    const [employee_id, setEmployee_id] = useState(null);
 
     const [customers, setCustomers] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -207,6 +207,20 @@ const Customer = () => {
         }, 0);
     };
 
+    const getEmployeeId =async () => {
+        try {
+            const respoonse = await fetch(`http://localhost:8000/login/employee/${localStorage.getItem('token')}`);
+            const data = await respoonse.json();
+            setEmployee_id(data.employee_id);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        getEmployeeId();
+    }, []);
+    
     // Checkout functionality (basic)
     const handleCheckout = async () => {
         // Prepare the order data with employee_id, customer_id, order_date, and order_status
@@ -214,7 +228,7 @@ const Customer = () => {
             order_date: new Date().toISOString(),  // Set the current date/time as the order date
             order_status: "กำลังดำเนินการ",      // Set order status as "Pending" or as needed
 
-            employee_id: 1,                        // Hardcoded employee_id (can be dynamic)
+            employee_id: employee_id,                        // Hardcoded employee_id (can be dynamic)
             customer_id: selectedCustomer.value,   // Use the selected customer_id
 
             orderDetails: cart.map(item => ({
@@ -223,6 +237,7 @@ const Customer = () => {
                 product_id: item.product_id
             })),
         };
+        
 
         try {
             // Send the order data to the backend
@@ -250,12 +265,14 @@ const Customer = () => {
             console.error('Error while checking out:', error);
         }
     };
+    
 
+    
 
     return (
 
         <div className="container mx-auto p-6 bg-gray-50 h-[800px] flex flex-col">
-
+        <button >Testlog</button>
        
             <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">Customer - Menu Coffee Shop</h1>
 
@@ -331,8 +348,10 @@ const Customer = () => {
                         value={selectedCustomer}  // Bind to selected customer state
                         onChange={handleCustomerChange}  // Update the state when the customer is selected
                         name="customer"
-                        placeholder="ระบุชื่อลูกค้า"
+
+                        placeholder="กรุณาเลือกลูกค้า" // ข้อความเริ่มต้น
                         options={customers}  // Use the customer data here
+                        isSearchable
                     />
                     <ul className="space-y-4 mt-6">
                         {cart.map((item) => (

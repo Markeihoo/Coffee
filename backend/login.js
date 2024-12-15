@@ -60,11 +60,15 @@ router.get('/employee/:token', async (req, res) => {
     const token = req.params.token;
     try {
         const decoded = jwt.verify(token, secret);
-        const tel = decoded.tel;
-        const result = await pool.query('SELECT * FROM employee WHERE tel = $1', [tel]);
-        res.json(result.rows);
+        const employee_id = decoded.employee_id;
+        const result = await pool.query('SELECT * FROM employee WHERE employee_id = $1', [employee_id]);
+        if(result.rows.length ===  0){
+            return res.status(401).json({ message: 'ไม่พบพนักงาน' });
+        }
+        res.status(200).json(result.rows[0]);
     } catch (error) {
-        res.status(401).json({ message: 'Unauthorized' });
+        console.log(error);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 });
 
