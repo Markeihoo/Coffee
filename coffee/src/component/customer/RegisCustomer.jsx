@@ -4,6 +4,7 @@ import { useState } from 'react';
 const RegisCustomer = () => {
   const [customer_name, setCustomer_name] = useState('');
   const [customer_tel, setCustomer_tel] = useState('');
+
   const reset = () => {
     customer_name('');
     customer_tel('');
@@ -43,6 +44,7 @@ const RegisCustomer = () => {
       </div>
     </div>
   )
+
 }
 
 export default RegisCustomer
