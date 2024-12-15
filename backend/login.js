@@ -17,7 +17,15 @@ router.get('/', (req, res) => {
 
 router.post('/create',async(req, res) => {
     const {employee_fname, employee_lname, password, tel} = req.body;
-    try{
+    try {
+        // ตรวจสอบว่ามีหมายเลขโทรศัพท์ซ้ำหรือไม่
+        const checkTel = await pool.query('SELECT * FROM employee WHERE tel = $1', [tel]);
+        
+        if (checkTel.rows.length > 0) {
+            // หากหมายเลขโทรศัพท์มีอยู่แล้ว ส่งข้อความแจ้งเตือน
+            return res.status(400).json({ error: 'เบอร์โทรนี้ถูกใช้งานแล้ว' });
+        }
+    
         const response = await pool.query('INSERT INTO employee (employee_fname, employee_lname, password, tel) VALUES ($1, $2, $3, $4) RETURNING *', [employee_fname, employee_lname, password, tel]);
         res.json(response.rows[0]);
     }catch(err){
@@ -37,7 +45,7 @@ router.post('/login',async (req, res) => {
         if(result.rows.length ===  0){
             return res.status(401).json({ message: 'ไม่พบพนักงาน' });
         }
-        const  token = jwt.sign({ tel: result.rows[0].tel }, secret, { expiresIn: '1h' });
+        const  token = jwt.sign({ employee_id: result.rows[0].employee_id}, secret, { expiresIn: '1h' });
         res.status(200).json({message:"เข้าสู่ระบบสําเร็จ", token:token});
        
     }catch(error){
