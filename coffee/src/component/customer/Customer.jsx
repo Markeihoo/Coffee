@@ -12,16 +12,18 @@ const Customer = () => {
     const [showCart, setShowCart] = useState(false);
     const [cartUpdated, setCartUpdated] = useState(false);
 
-    const [showPaymentDialog, setShowPaymentDialog] = useState(false); // For showing payment dialog
-    const [paymentMethod, setPaymentMethod] = useState('เงินสด'); // For storing selected payment method
+    const [showPaymentDialog, setShowPaymentDialog] = useState(false); 
+    const [paymentMethod, setPaymentMethod] = useState('เงินสด'); 
 
     const [employee_id, setEmployee_id] = useState(null);
 
     const [customers, setCustomers] = useState([]);
     const [selectedCustomer, setSelectedCustomer] = useState(null);
-    const[orderdeDiscription, setOrderdeDiscription] = useState(null)
 
-    // Function to handle the customer selection from the dropdown
+    const [orderdeDiscription, setOrderdeDiscription] = useState('');
+
+
+    //ดรอปดาวชื่อลูกค้า
     const handleCustomerChange = (selectedOption) => {
         setSelectedCustomer(selectedOption);
     };
@@ -29,7 +31,7 @@ const Customer = () => {
     const [order, setOrder] = useState(null);  // state สำหรับเก็บข้อมูลออเดอร์ล่าสุด
     const [refresh, setRefresh] = useState(false); // ตัวแปรสำหรับ trigger การดึงข้อมูลใหม่
 
-    // useEffect ดึงข้อมูลออเดอร์ล่าสุด
+    //ดึงข้อมูลออเดอร์ล่าสุด
     useEffect(() => {
         const fetchOrder = async () => {
             try {
@@ -43,24 +45,25 @@ const Customer = () => {
                 console.error('Error fetching order data:', err);
             }
         };
-    
+
         fetchOrder();
     }, [refresh]); // โหลดใหม่ทุกครั้งที่ refresh เปลี่ยนค่า
 
+    //ยืนยันการชำระเงิน ส่งข้อมูลวิธีการชำระเงินของลูกค้า
     const handlePaymentConfirm = async () => {
         if (!paymentMethod || !order?.order_id) {
             alert("กรุณาเลือกวิธีการชำระเงินและตรวจสอบรายการออเดอร์");
             return;
         }
-    
+
         console.log(`ยืนยันการชำระเงินด้วยวิธี: ${paymentMethod}`);
-    
+
         // เตรียมข้อมูลที่จะส่งไปยัง backend
         const paymentData = {
-            payment_method: paymentMethod, // วิธีการชำระเงิน (Cash หรือ Bank Transfer)
-            order_id: order.order_id,     // ID ของออเดอร์ที่ต้องการชำระเงิน
+            payment_method: paymentMethod, 
+            order_id: order.order_id,   
         };
-    
+
         try {
             // เรียก API เพื่อส่งข้อมูลการชำระเงิน
             const response = await fetch('http://localhost:8000/payment/create', {
@@ -68,17 +71,17 @@ const Customer = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(paymentData), // ส่งข้อมูลในรูปแบบ JSON
+                body: JSON.stringify(paymentData), 
             });
-    
+
             if (response.ok) {
                 const data = await response.json(); // อ่านผลลัพธ์ที่ได้จาก backend
                 console.log("การชำระเงินสำเร็จ:", data);
-    
-                alert("การชำระเงินสำเร็จ!"); // แจ้งเตือนผู้ใช้
-                setShowPaymentDialog(false); // ปิด dialog
+
+                alert("การชำระเงินสำเร็จ!"); 
+                setShowPaymentDialog(false); 
             } else {
-                const errorData = await response.json(); // อ่านข้อความ error ที่ backend ส่งมา
+                const errorData = await response.json(); 
                 console.error("Error confirming payment:", errorData);
                 alert("เกิดข้อผิดพลาดในการยืนยันการชำระเงิน");
             }
@@ -87,8 +90,8 @@ const Customer = () => {
             alert("ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
         }
     };
-    
 
+    //ดึงข้อมูลลูกค้าทั้งหมดจะเอาไว้ในดรอปดาว
     useEffect(() => {
         const fetchCustomers = async () => {
             try {
@@ -99,11 +102,11 @@ const Customer = () => {
                 const data = await response.json();
                 const customerOptions = data.map(customer => ({
                     value: customer.customer_id,
-                    label: customer.customer_name,  // Assuming customer_name is the name of the customer
+                    label: customer.customer_name,  
                 }));
                 setCustomers(customerOptions);
                 if (customerOptions.length > 0) {
-                    setSelectedCustomer(customerOptions[0]);  // Set the default customer if needed
+                    setSelectedCustomer(customerOptions[0]);  
                 }
             } catch (err) {
                 console.error('Error fetching customer data:', err);
@@ -112,7 +115,8 @@ const Customer = () => {
 
         fetchCustomers();
     }, []);
-    // Fetch categories
+
+    //ดึงข้อมูลประเภทสินค้าทั้งหมด
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -132,7 +136,7 @@ const Customer = () => {
         fetchCategories();
     }, []);
 
-    // Fetch products when a category is selected
+    //ดึงข้อมูลสินค้าตามประเภทที่เลือก
     useEffect(() => {
         if (selectedCategory) {
             const fetchProducts = async () => {
@@ -152,11 +156,11 @@ const Customer = () => {
         }
     }, [selectedCategory]);
 
-    // Search functionality
+    //ฟังก์ชันค้นหา เวลากดปุ่มค้นหาจะแสดงข้อมูลที่ตรงกับคําค้นหา
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
         if (event.target.value === "") {
-            setFilteredProducts(products); // Display all products if search query is empty
+            setFilteredProducts(products); 
         } else {
             const filtered = products.filter(product =>
                 product.product_name.toLowerCase().includes(event.target.value.toLowerCase())
@@ -165,7 +169,7 @@ const Customer = () => {
         }
     };
 
-    // Add product to cart
+    //ฟังก์ชันเพิ่มสินค้าลงในตะกร้า แสดงตะกร้า และเคลียร์ตะกร้า
     const addToCart = (product) => {
         setCart((prevCart) => {
             const updatedCart = prevCart.map(item =>
@@ -187,17 +191,17 @@ const Customer = () => {
         }, 20000);
     };
 
-    // Remove product from cart
+    //ลบสินค้าออกจากตะกร้า
     const removeFromCart = (product_id) => {
         setCart((prevCart) => prevCart.filter(item => item.product_id !== product_id));
     };
 
-    // Clear the entire cart
+    //เคลียร์ตะกร้าให้ว่าง
     const clearCart = () => {
         setCart([]);
     };
 
-    // Calculate the total price of items in the cart
+    //คํานวณราคารวมโดยการคูณราคาและจํานวน 
     const getTotalPrice = () => {
         return cart.reduce((total, item) => {
             if (!isNaN(item.product_price) && !isNaN(item.quantity)) {
@@ -207,40 +211,38 @@ const Customer = () => {
         }, 0);
     };
 
-    const getEmployeeId =async () => {
+    //ดึงข้อมูลพนักงานของพนักงานที่ล็อคอิน
+    const getEmployeeId = async () => {
         try {
             const respoonse = await fetch(`http://localhost:8000/login/employee/${localStorage.getItem('token')}`);
             const data = await respoonse.json();
             setEmployee_id(data.employee_id);
-            
+
         } catch (error) {
             console.log(error);
         }
     }
+
+    //ดึงข้อมูลพนักงานเมื่อเปิดหน้าเว็บเลย
     useEffect(() => {
         getEmployeeId();
     }, []);
-    
-    // Checkout functionality (basic)
+
+    //ฟังก์ชันสําหรับการสั่งซื้อสินค้า
     const handleCheckout = async () => {
-        // Prepare the order data with employee_id, customer_id, order_date, and order_status
         const orderData = {
-            order_date: new Date().toISOString(),  // Set the current date/time as the order date
-            order_status: "กำลังดำเนินการ",      // Set order status as "Pending" or as needed
-
-            employee_id: employee_id,                        // Hardcoded employee_id (can be dynamic)
-            customer_id: selectedCustomer.value,   // Use the selected customer_id
-
+            order_date: new Date().toISOString(),  
+            order_status: "กำลังดำเนินการ",     
+            employee_id: employee_id,             
+            customer_id: selectedCustomer.value,  
             orderDetails: cart.map(item => ({
                 quantity: item.quantity,
-                orderde_discription: orderdeDiscription,
-                product_id: item.product_id
+                orderde_discription: orderdeDiscription[item.product_id] === "" ? null : orderdeDiscription[item.product_id] || null, 
+                product_id: item.product_id,
             })),
         };
-        
 
         try {
-            // Send the order data to the backend
             const response = await fetch('http://localhost:8000/orders/create', {
                 method: 'POST',
                 headers: {
@@ -250,13 +252,13 @@ const Customer = () => {
             });
 
             if (response.ok) {
-                setShowPaymentDialog(true);  // Show the payment method dialog
+                setShowPaymentDialog(true);  
 
                 const responseData = await response.json();
                 console.log('Order successfully created:', responseData);
-                setOrderdeDiscription('');
-                setCart([]); // Clear cart after checkout
-                setRefresh((prev) => !prev); // Trigger refresh for latest data
+                setOrderdeDiscription({});  
+                setCart([]); 
+                setRefresh((prev) => !prev); 
             } else {
                 const errorData = await response.json();
                 console.error('Error placing order:', errorData);
@@ -265,17 +267,28 @@ const Customer = () => {
             console.error('Error while checking out:', error);
         }
     };
-    
 
-    
+
+    //ฟังก์ชันสําหรับการแก้ไขคําอธิบายของสินค้าแต่ละรายการ
+    const handleDescriptionChange = (productId, value) => {
+        setOrderdeDiscription((prev) => ({
+            ...prev,
+            [productId]: value,
+        }));
+    };
+
+
 
     return (
-
         <div className="container mx-auto p-6 bg-gray-50 h-[800px] flex flex-col">
-       
             <h1 className="text-center text-3xl font-bold text-gray-800 ">Customer - Menu Coffee Shop</h1>
 
-            {/* Category buttons */}
+
+
+
+
+
+            {/* ปุ่มหมวดหมู่ */}
             <div className="categories mt-8 flex justify-center space-x-6">
                 {categories.map((category) => (
                     <button
@@ -288,7 +301,11 @@ const Customer = () => {
                 ))}
             </div>
 
-            {/* Search bar */}
+
+
+
+
+            {/* ค้นหา */}
             <div className="search mt-8 flex justify-center">
                 <input
                     type="text"
@@ -299,7 +316,12 @@ const Customer = () => {
                 />
             </div>
 
-            {/* Display products */}
+
+
+
+
+
+            {/*แสดงสินค้าในหมวดหมู่ที่เลือก */}
             <div className="products mt-8 gap-6 border border-gray-300 rounded-lg p-4 h-full overflow-y-auto">
                 {filteredProducts.length === 0 ? (
                     <div className="text-center text-xl text-red-500 font-semibold">
@@ -307,7 +329,7 @@ const Customer = () => {
                     </div>
                 ) : (
                     <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                        {filteredProducts.slice(0,1000).map((product) => (
+                        {filteredProducts.slice(0, 1000).map((product) => (
                             <li key={product.product_id} className="product flex flex-col items-center p-3 border border-gray-200 rounded-lg shadow-sm w-full">
                                 <span className="text-lg font-semibold">
                                     {product.product_name}
@@ -326,7 +348,12 @@ const Customer = () => {
                 )}
             </div>
 
-            {/* Cart button */}
+
+
+
+
+
+            {/* ปุ่มตะกร้า */}
             <button
                 onClick={() => setShowCart(!showCart)}
                 className="bg-red-500 text-white rounded-full p-4 shadow-lg hover:bg-red-600 transition duration-300 absolute top-4 right-4"
@@ -334,7 +361,12 @@ const Customer = () => {
                 🛒
             </button>
 
-            {/* Cart sidebar */}
+
+
+
+
+
+            {/* ตะกร้า */}
             {cartUpdated && (
                 <div
                     className={`cart p-4 border border-gray-300 rounded-lg shadow-lg absolute top-16 right-4 bg-white w-72 transition-transform duration-500 ${showCart ? 'transform translate-x-0' : 'transform translate-x-full'}`}
@@ -344,12 +376,12 @@ const Customer = () => {
                     <Select
                         className="basic-single"
                         classNamePrefix="select"
-                        value={selectedCustomer}  // Bind to selected customer state
-                        onChange={handleCustomerChange}  // Update the state when the customer is selected
+                        value={selectedCustomer}  
+                        onChange={handleCustomerChange}  
                         name="customer"
-                        placeholder="กรุณาเลือกลูกค้า" // ข้อความเริ่มต้น
-                        options={customers}  // Use the customer data here
-                        
+                        placeholder="กรุณาเลือกลูกค้า" 
+                        options={customers} 
+
                     />
                     <ul className="space-y-4 mt-6">
                         {cart.map((item) => (
@@ -360,8 +392,10 @@ const Customer = () => {
                                 <div className="mb-2">
                                     <input
                                         type="text"
-                                        // value={orderdeDiscription}
-                                        onChange={(e) => setOrderdeDiscription(e.target.value)}
+                                        value={orderdeDiscription[item.product_id] || ""} 
+                                        onChange={(e) =>
+                                            handleDescriptionChange(item.product_id, e.target.value) 
+                                        }
                                         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         placeholder={`เพิ่มรายละเอียด ${item.product_name}`}
                                     />
@@ -398,15 +432,20 @@ const Customer = () => {
                 </div>
             )}
 
-            {/* Payment Method Modal */}
+
+
+
+
+
+            {/* ไดอะล็อกวิธีการชำระเงิน */}
             {showPaymentDialog && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
                     <div className="bg-white p-6 rounded-lg w-1/3">
                         <h2 className="text-lg font-semibold text-center">เลือกวิธีการชำระเงิน</h2>
                         {order && (
                             <p>รายการออเดอร์ที่: {order.order_id} <br />
-                            รวม: <span className='text-red-500'>{order.total_price}</span> ฿ิ <br />
-                            ชื่อลูกค้า: {order.customer_name}</p>
+                                รวม: <span className='text-red-500'>{order.total_price}</span> ฿ิ <br />
+                                ชื่อลูกค้า: {order.customer_name}</p>
                         )}
                         <div className="mt-4 w-full h-full flex flex-col justify-center items-center text-center">
                             <button

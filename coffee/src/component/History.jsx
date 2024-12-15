@@ -78,6 +78,7 @@ const PaymentHistory = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
 
+    // ฟังก์ชันดึงข้อมูลการชำระเงินทั้งหมด
     useEffect(() => {
         const fetchPaymentHistory = async () => {
             try {
@@ -98,15 +99,17 @@ const PaymentHistory = () => {
         fetchPaymentHistory();
     }, []);
 
+    // ฟังก์ชันแปลงวันที่ให้สามารถแสดงได้อย่างถูกต้องตามเวลาประเทศไทย
     const formatDate = (dateString) => {
         if (!dateString) return 'ไม่พบวันที่';
         const date = new Date(dateString);
         return date.toString() === 'Invalid Date' ? 'ไม่พบวันที่' : date.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
     };
 
+
     const handleItemsPerPageChange = (event) => {
         setItemsPerPage(Number(event.target.value));
-        setCurrentPage(1); // Reset to first page
+        setCurrentPage(1); 
     };
 
     const totalPages = Math.ceil(paymentHistory.length / itemsPerPage);

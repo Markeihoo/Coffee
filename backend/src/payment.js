@@ -2,6 +2,8 @@ const pool = require('../db');
 const express = require('express');
 const router = express.Router();
 
+
+// GET ดึงข้อมูลการชําระเงินทั้งหมด
 router.get('/get', async (req, res) => {
     try {
         const response = await pool.query(`
@@ -26,14 +28,16 @@ router.get('/get', async (req, res) => {
             ORDER BY p.Payment_id
         `);
 
-        res.json(response.rows);  // ส่งข้อมูลที่ได้จาก query
+        res.json(response.rows); 
     } catch (err) {
         console.error("Error fetching payment data:", err);
         res.status(500).json({ message: "เกิดข้อผิดพลาดในการดึงข้อมูลจากฐานข้อมูล" });
     }
 });
+
+// POST สร้างข้อมูลการชําระเงิน
 router.post('/create', async (req, res) => {
-    const { payment_method, order_id } = req.body; // รับข้อมูลจาก body
+    const { payment_method, order_id } = req.body; 
 
     try {
         const response = await pool.query(
@@ -42,10 +46,10 @@ router.post('/create', async (req, res) => {
             VALUES (NOW(), $1, $2)
             RETURNING *;
             `,
-            [payment_method, order_id] // ใช้ parameterized query เพื่อป้องกัน SQL Injection
+            [payment_method, order_id] 
         );
 
-        res.json(response.rows[0]); // ส่งข้อมูล payment ที่เพิ่งถูกสร้าง
+        res.json(response.rows[0]); 
     } catch (err) {
         console.error("Error creating payment:", err);
         res.status(500).json({ message: "เกิดข้อผิดพลาดในการสร้าง Payment" });
