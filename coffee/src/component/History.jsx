@@ -32,7 +32,7 @@ const PaymentHistory = () => {
     };
 
     return (
-        <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+        <div className="container mx-auto p-6 bg-gray-50 ">
             <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">ประวัติการชำระเงิน</h1>
             <h3 className='mt-[-20px] mb-5'>การชำระเงินทั้งหมด <span className="text-blue-600">{paymentHistory.length}</span> รายการ</h3>
             {loading ? (

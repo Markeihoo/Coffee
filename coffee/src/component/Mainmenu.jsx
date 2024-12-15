@@ -9,7 +9,7 @@ import Welcome from './customer/Welcome.jsx'
 import { useState } from 'react'
 import Orders from './Orders'
 import Register_employee from './Register_employee'
-import Register_customer from './customer/regisCustomer'
+import Register_customer from './customer/RegisCustomer'
 import History from './History'
 import CustomerList from './CustomerList.jsx'
 import Customer from './customer/Customer.jsx'
@@ -39,7 +39,7 @@ const Mainmenu = () => {
 
   return (
     <>
-    <div className='main-container' >
+    <div className='main-container flex flex-col md:flex-row h-auto' >
     <div className='sidebar'>
     <Menu ToggleOrder={ToggleOrders} 
     ToggleRegister_employee={ToggleRegister_employee}
@@ -52,7 +52,7 @@ const Mainmenu = () => {
 
     </div>
 
-    <div className='content w-[900px]'>
+    <div className='content w-[100vh]'>
     {activeComponent === 'Orders' && <Orders />}
     {activeComponent === 'welcome' && <Welcome />}
     {activeComponent === 'Register_employee' && <Register_employee />}
