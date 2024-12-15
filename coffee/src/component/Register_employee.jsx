@@ -16,7 +16,10 @@ const Register_employee = () => {
   const handleLogin = async (event) => {
       event.preventDefault(); // ป้องกันการรีเฟรชหน้า
       await submitRegister(tel,password,employeeFname,employeeLname); // เรียกใช้งานฟังก์ชันล็อกอิน
-      
+      setTel('');
+      setPassword('');
+      setEmployeeFname('');
+      setEmployeeLname('');
     };
 
   return (
