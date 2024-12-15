@@ -50,9 +50,9 @@ const PaymentHistory = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {paymentHistory.map((payment) => (
+                        {paymentHistory.map((payment,index) => (
                             <tr key={payment.payment_id}>
-                                <td className="px-4 py-2 border border-gray-300 w-1">{payment.payment_id}</td>
+                                <td className="px-4 py-2 border border-gray-300 w-1">{index + 1}</td>
                                 <td className="px-4 py-2 border border-gray-300 w-2">{formatDate(payment.payment_date)}</td>
                                 <td className="px-4 py-2 border border-gray-300">{payment.payment_method}</td>
                                 <td className="px-4 py-2 border border-gray-300">{payment.customer_name}</td>
