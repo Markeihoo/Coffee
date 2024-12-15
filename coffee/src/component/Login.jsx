@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { submitLogin } from './customer/Login.js';
 
 const Login = () => {
-   const [tel, setTel] = useState('');
-   const [password, setPassword] = useState('');
-   const navigate = useNavigate();
+  const [tel, setTel] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (event) => {
     event.preventDefault(); // ป้องกันการรีเฟรชหน้า
@@ -25,7 +25,7 @@ const Login = () => {
         </div>
 
         <h1>Coffe Shop</h1>
-        
+
 
         {/* ใช้ form เพื่อรองรับการกด Enter */}
         <form onSubmit={handleLogin}>

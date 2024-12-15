@@ -2,27 +2,26 @@ const pool = require('../db');
 const express = require('express');
 const router = express.Router();
 
-// GET request เพื่อดึงข้อมูลลูกค้าทั้งหมด
+// GET ดึงข้อมูลลูกค้าทั้งหมด
 router.get('/get', async (req, res) => {
     try {
         const response = await pool.query('SELECT * FROM customer ORDER BY customer_id ASC');
-        res.json(response.rows); // ส่งกลับข้อมูลลูกค้าทั้งหมด
+        res.json(response.rows); 
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ error: "Internal server error" }); // ถ้ามีข้อผิดพลาด
+        res.status(500).json({ error: "Internal server error" }); 
     }
 });
 
+// POST สร้างข้อมูลลูกค้า
 router.post('/create', async (req, res) => {
-    const { Customer_name, Customer_tel } = req.body;  // รับข้อมูลจาก request body
+    const { Customer_name, Customer_tel } = req.body;  
 
-    // ตรวจสอบว่า Customer_name และ Customer_tel ถูกส่งมาหรือไม่
     if (!Customer_name || !Customer_tel) {
         return res.status(400).json({ error: "Customer_name and Customer_tel are required" });
     }
 
     try {
-        // ตรวจสอบว่าเบอร์โทรศัพท์ซ้ำกันหรือไม่
         const checkTelExists = await pool.query(
             'SELECT * FROM Customer WHERE Customer_tel = $1',
             [Customer_tel]
@@ -39,17 +38,18 @@ router.post('/create', async (req, res) => {
             [Customer_name, Customer_tel]
         );
 
-        // ส่งข้อมูลที่ถูกเพิ่มกลับไป
-        return res.json(response.rows[0]);  // ส่งแค่แถวแรกที่ถูกเพิ่ม
+        return res.json(response.rows[0]);  
 
     } catch (err) {
         console.error('Error executing query:', err.message);
         res.status(500).json({ error: "Internal server error", details: err.message });
     }
 });
+
+// PATCH อัพเดตข้อมูลลูกค้า
 router.patch('/update/:customer_id', async (req, res) => {
-    const { customer_id } = req.params;  // รับ customer_id จาก URL parameter
-    const { Customer_name, Customer_tel } = req.body;  // รับข้อมูลจาก request body
+    const { customer_id } = req.params;  
+    const { Customer_name, Customer_tel } = req.body;  
 
     // ตรวจสอบว่า customer_id, Customer_name และ Customer_tel ถูกส่งมาหรือไม่
     if (!customer_id || !Customer_name || !Customer_tel) {
@@ -86,9 +86,9 @@ router.patch('/update/:customer_id', async (req, res) => {
         res.status(500).json({ error: "Internal server error", details: err.message });
     }
 });
-
+// DELETE ลบข้อมูลลูกค้า
 router.delete('/delete/:customer_id', async (req, res) => {
-    const { customer_id } = req.params;  // รับ customer_id จาก URL parameter    
+    const { customer_id } = req.params;    
 
     // ตรวจสอบว่า customer_id ถูกส่งมาหรือไม่
     if (!customer_id) {

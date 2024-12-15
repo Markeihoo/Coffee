@@ -3,17 +3,17 @@ const express = require('express');
 const router = express.Router();
 
 
-// API สำหรับดึงข้อมูลออเดอร์ที่มีสถานะ 'กำลังดำเนินการ' พร้อมรายละเอียดสินค้า
+// GET ดึงข้อมูลรายการสั่งซื้อที่มีสถานะ 'กำลังดำเนินการ'
 router.get('/get', async (req, res) => {
     try {
-        // SQL Query เพื่อดึงข้อมูลจาก Orders, OrderDetail และ Product สำหรับสถานะ 'กำลังดำเนินการ'
+        // SQL Query เพื่อดึงข้อมูลจาก Orders, OrderDetail และ Product ที่มีสถานะ 'กำลังดำเนินการ'
         const query = `
             SELECT 
                 orders.order_id, 
                 orders.order_date, 
                 orders.order_status, 
                 orderdetail.quantity, 
-                orderdetail.qrderde_discription, 
+                orderdetail.orderde_discription, 
                 product.product_name
             FROM 
                 orders
@@ -27,7 +27,6 @@ router.get('/get', async (req, res) => {
                 orders.order_date;
         `;
 
-        // Execute query
         const response = await pool.query(query);
 
         // หากไม่มีข้อมูล
@@ -68,10 +67,10 @@ router.get('/get', async (req, res) => {
     }
 });
 
+// POST สร้างข้อมูลออเดอร์
 router.post('/create', async (req, res) => {
     const { order_date, order_status, employee_id, customer_id, orderDetails } = req.body;
 
-    // ตรวจสอบข้อมูลที่จำเป็น
     if (!order_date || !order_status || !employee_id || !customer_id || !orderDetails || orderDetails.length === 0) {
         return res.status(400).json({ error: 'ข้อมูลไม่ครบถ้วน' });
     }
@@ -130,7 +129,7 @@ router.post('/create', async (req, res) => {
 });
 
 
-
+// PATCH อัปเดตข้อมูลออเดอร์
 router.patch('/update/:order_id', async (req, res) => {
     const { order_id } = req.params;
     const { order_status } = req.body;
@@ -160,7 +159,7 @@ router.patch('/update/:order_id', async (req, res) => {
     }
 });
 
-// Route สำหรับการดึงออเดอร์ล่าสุดพร้อมราคารวม
+// GET ดึงข้อมูลออเดอร์ล่าสุด พร้อมคำนวณราคารวมของแต่ละออเดอร์
 router.get('/get/latest', async (req, res) => {
     try {
         // SQL query ดึงข้อมูลออเดอร์ล่าสุดพร้อมคำนวณราคารวม (total_price)
@@ -192,7 +191,7 @@ router.get('/get/latest', async (req, res) => {
 
         // ส่งข้อมูลออเดอร์ล่าสุด
         if (response.rows.length > 0) {
-            res.json(response.rows[0]); // ส่งออเดอร์พร้อมราคารวม
+            res.json(response.rows[0]); 
         } else {
             res.status(404).json({ message: 'ไม่พบออเดอร์' });
         }

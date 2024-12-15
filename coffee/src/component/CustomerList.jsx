@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as Dialog from '@radix-ui/react-dialog'; // Dialog component จาก Radix UI
+import * as Dialog from '@radix-ui/react-dialog'; 
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
@@ -7,9 +7,9 @@ const CustomerList = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredCustomers, setFilteredCustomers] = useState([]);
-  const [isSaving, setIsSaving] = useState(false);  // การตรวจสอบสถานะการบันทึกข้อมูล
+  const [isSaving, setIsSaving] = useState(false);  
 
-  // ดึงข้อมูลลูกค้าจาก API
+  // ดึงข้อมูลลูกค้าทั้งหมด
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -29,7 +29,7 @@ const CustomerList = () => {
 
     fetchCustomers();
   }, []);
-
+ // ฟังก์ชันเมื่อเลือกลูกค้าที่ต้องการ
   const handleRowClick = (customer) => {
     setSelectedCustomer(customer);
   };
@@ -56,11 +56,10 @@ const CustomerList = () => {
   // ฟังก์ชันเมื่อกดปุ่ม "บันทึก"
   const handleSave = async (event) => {
     event.preventDefault();
-    if (!selectedCustomer) return; // ถ้าไม่มีลูกค้าที่เลือก
+    if (!selectedCustomer) return; 
 
     const { customer_id, customer_name, customer_tel } = selectedCustomer;
 
-    // ตรวจสอบว่า customer_name และ customer_tel มีการเปลี่ยนแปลงก่อนที่จะบันทึก
     if (!customer_name || !customer_tel) {
       alert("กรุณากรอกข้อมูลให้ครบถ้วน");
       return;
@@ -69,7 +68,6 @@ const CustomerList = () => {
     setIsSaving(true);
 
     try {
-      // ส่งคำขอ PATCH ไปยัง API
       const response = await fetch(`http://localhost:8000/customer/update/${customer_id}`, {
         method: 'PATCH',
         headers: {
@@ -89,7 +87,7 @@ const CustomerList = () => {
         );
         setCustomers(updatedCustomers);
         setFilteredCustomers(updatedCustomers);
-        setSelectedCustomer(null); // ปิด Dialog
+        setSelectedCustomer(null); 
         alert("ข้อมูลลูกค้าถูกอัปเดตเรียบร้อยแล้ว");
       } else {
         alert(data.error || "เกิดข้อผิดพลาดในการอัปเดตข้อมูล");
@@ -160,7 +158,9 @@ const CustomerList = () => {
             </table>
           </div>
 
-          {/* Dialog สำหรับแก้ไขข้อมูลลูกค้า */}
+
+
+          {/* Dialog แก้ไขข้อมูลลูกค้า */}
           <Dialog.Root open={selectedCustomer !== null} onOpenChange={(open) => { if (!open) setSelectedCustomer(null); }}>
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />

@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 const Orders = () => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [newStatus, setNewStatus] = useState({}); // เก็บสถานะชั่วคราวที่เลือกไว้
+    const [newStatus, setNewStatus] = useState({}); 
 
+    // ดึงข้อมูลออเดอร์ทั้งหมดที่ส่งมา
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -24,6 +25,7 @@ const Orders = () => {
         fetchOrders();
     }, []);
 
+    // อัปเดตสถานะรายการออเดอร์
     const updateOrderStatus = async (orderId, order_status) => {
         try {
             const response = await fetch(`http://localhost:8000/orders/update/${orderId}`, {
@@ -48,7 +50,7 @@ const Orders = () => {
             console.error('Error updating order status:', error);
         }
     };
-
+// อัปเดตสถานะ
     const handleStatusChange = (orderId, newStatusValue) => {
         // เก็บสถานะที่เลือกไว้ใน state ใหม่
         setNewStatus((prevStatus) => ({
@@ -56,7 +58,7 @@ const Orders = () => {
             [orderId]: newStatusValue,
         }));
     };
-
+// อัปเดตสถานะเมื่อกดบันทึก
     const handleSave = (orderId) => {
         const status = newStatus[orderId]; // ดึงสถานะที่เลือกมาใช้
         if (status) {
@@ -70,11 +72,11 @@ const Orders = () => {
             {loading ? (
                 <p className="text-center text-gray-600">กำลังโหลดข้อมูล...</p>
             ) : orders.length === 0 ? (
-                <p className="text-center text-gray-600">ไม่มีข้อมูลรายการออเดอร์ตอนนี้</p> // แสดงข้อความเมื่อไม่มีข้อมูล
+                <p className="text-center text-gray-600">ไม่มีข้อมูลรายการออเดอร์ตอนนี้</p> 
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {orders
-                        .filter((order) => order.order_status == 'กำลังดำเนินการ') // กรองออกจากการแสดงผล
+                        .filter((order) => order.order_status == 'กำลังดำเนินการ') 
                         .map((order) => (
                             <div
                                 key={order.order_id}
@@ -85,12 +87,18 @@ const Orders = () => {
                                 </h2>
                                 <p className="text-gray-600">วันที่สั่งซื้อ: {new Date(order.order_date).toLocaleString('th-TH')}</p>
                                 <p className="text-gray-600">สถานะ: <span className="text-red-600">{order.order_status}</span></p>
+
+
+
                                 {/* รายละเอียดสินค้า */}
                                 <div className="mt-4">
                                     {order.products.length > 0 && (
                                         <ul>
                                             {order.products.map((product, index) => (
                                                 <li key={index} className="text-gray-600">
+
+
+
                                                     {/* แสดงชื่อสินค้าและจำนวน */}
                                                     {product.product_name} (x{product.Quantity})
                                                     {product.OrderDe_discription && (
@@ -118,7 +126,7 @@ const Orders = () => {
                                 </div>
                                 <button
                                     className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-                                    onClick={() => handleSave(order.order_id)} // เมื่อกดบันทึก, จะเรียกใช้ handleSave
+                                    onClick={() => handleSave(order.order_id)} 
                                 >
                                     บันทึกข้อมูล
                                 </button>
