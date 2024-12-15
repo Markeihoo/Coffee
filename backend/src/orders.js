@@ -12,8 +12,8 @@ router.get('/get', async (req, res) => {
                 orders.order_id, 
                 orders.order_date, 
                 orders.order_status, 
-                orderdetail.Quantity, 
-                orderdetail.OrderDe_discription, 
+                orderdetail.quantity, 
+                orderdetail.qrderde_discription, 
                 product.product_name
             FROM 
                 orders
@@ -26,7 +26,7 @@ router.get('/get', async (req, res) => {
             ORDER BY 
                 orders.order_date;
         `;
-        
+
         // Execute query
         const response = await pool.query(query);
 
@@ -38,7 +38,7 @@ router.get('/get', async (req, res) => {
         // จัดกลุ่มข้อมูลตาม order_id
         const orders = response.rows.reduce((acc, row) => {
             const orderIndex = acc.findIndex(order => order.order_id === row.order_id);
-            
+
             if (orderIndex === -1) {
                 acc.push({
                     order_id: row.order_id,
@@ -59,7 +59,7 @@ router.get('/get', async (req, res) => {
             }
             return acc;
         }, []);
-        
+
         // ส่งข้อมูลทั้งหมดกลับไปยัง client
         res.json(orders);
     } catch (err) {
@@ -134,7 +134,7 @@ router.post('/create', async (req, res) => {
 router.patch('/update/:order_id', async (req, res) => {
     const { order_id } = req.params;
     const { order_status } = req.body;
-    
+
     // ตรวจสอบว่าได้รับค่า order_status หรือไม่
     if (!order_status) {
         return res.status(400).json({ error: "สถานะออเดอร์ไม่สามารถเป็น null หรือ ค่าว่างได้" });
