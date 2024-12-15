@@ -98,7 +98,7 @@ const Customer = () => {
     };
 
     return (
-        <div className="container mx-auto p-6 bg-gray-50 h-[800px] flex flex-col ">
+        <div className="container mx-auto p-6 bg-gray-50  flex flex-col ">
             <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">Customer - Menu Coffee Shop</h1>
 
             {/* ปุ่มหมวดหมู่ */}

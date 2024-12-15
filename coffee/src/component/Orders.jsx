@@ -65,7 +65,7 @@ const Orders = () => {
     };
 
     return (
-        <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+        <div className="container mx-auto p-6 bg-gray-50 ">
             <h1 className="text-center text-3xl font-bold text-gray-800 mb-8">รายการออเดอร์</h1>
             {loading ? (
                 <p className="text-center text-gray-600">กำลังโหลดข้อมูล...</p>

@@ -10,7 +10,7 @@ const Employee = require('./src/employee');
 const Orders = require('./src/orders');
 const OrderDetails = require('./src/orderDetails');
 const Payment = require('./src/payment');
-
+const register_cm = require('./src/register_cm');
 
 
 dotenv.config();
@@ -44,6 +44,8 @@ app.use('/employee', Employee); //localhost:8000/employee/get
 app.use('/orders', Orders);     //localhost:8000/orders/get
 app.use('/orderDetails', OrderDetails); //localhost:8000/orderDetails/get/1
 app.use('/payment', Payment);   //localhost:8000/payment/get
+
+app.use('/register_cm',register_cm); //localhost:8000/register_cm
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
